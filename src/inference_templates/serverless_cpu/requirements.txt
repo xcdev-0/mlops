@@ -1,0 +1,16 @@
+# Serverless CPU 추론용 Python 의존성
+
+# PyTorch (CPU 버전)
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Transformers
+transformers>=4.30.0
+
+# AWS SDK
+boto3>=1.28.0
+
+# 기타 유틸리티
+numpy>=1.24.0
+

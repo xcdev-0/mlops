@@ -1,0 +1,4 @@
+# Serverless 추론 배포용 Lambda Python 의존성
+
+# AWS SDK
+boto3>=1.28.0
