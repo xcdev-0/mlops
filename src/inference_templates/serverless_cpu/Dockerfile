@@ -1,19 +1,14 @@
-# Serverless CPU 추론용 Lambda 컨테이너 이미지
-FROM public.ecr.aws/lambda/python:3.11
+FROM public.ecr.aws/lambda/python:3.12
 
-# 작업 디렉토리 설정
-WORKDIR ${LAMBDA_TASK_ROOT}
+RUN dnf install -y unzip wget && dnf clean all
 
-# 의존성 파일 복사
-COPY requirements.txt ${LAMBDA_TASK_ROOT}
+# PyTorch CPU 버전을 먼저 설치 (Lambda는 CPU만 사용)
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch==2.2.0
 
-# Python 패키지 설치
-RUN pip install --no-cache-dir -r requirements.txt
+# 나머지 패키지 설치 (torch 제외)
+COPY requirements.txt ${LAMBDA_TASK_ROOT}/requirements.txt
+RUN pip install --no-cache-dir -r ${LAMBDA_TASK_ROOT}/requirements.txt || true
 
-# 애플리케이션 코드 복사
-COPY lambda_app.py ${LAMBDA_TASK_ROOT}
-COPY model.py ${LAMBDA_TASK_ROOT}
+COPY handler.py ${LAMBDA_TASK_ROOT}/handler.py
 
-# Lambda 핸들러 지정
-CMD [ "lambda_app.handler" ]
-
+CMD ["handler.handler"]

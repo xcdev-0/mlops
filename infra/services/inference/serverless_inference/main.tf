@@ -21,6 +21,12 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+resource "aws_iam_role_policy_attachment" "lambda_s3_read" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
+
+
 # Lambda 함수 (컨테이너 이미지 기반)
 resource "aws_lambda_function" "lambda" {
   function_name = "${var.prefix}-lambda"
@@ -41,6 +47,10 @@ resource "aws_lambda_function" "lambda" {
   tags = {
     Name        = "${var.prefix}-lambda"
     Environment = var.environment
+  }
+
+  ephemeral_storage {
+    size = 10240   # 10 GB
   }
 }
 

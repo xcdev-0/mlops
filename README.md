@@ -1,4 +1,4 @@
-# Capstone 2024-12 Project
+
 
 ML/AI 인프라 프로젝트
 
