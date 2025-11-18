@@ -1,8 +1,9 @@
-# Llama 모델 서버 Python 의존성
-
-
-
-
-
-
-
+torch==2.3.0
+transformers==4.31.0
+peft==0.4.0
+bitsandbytes==0.40.2
+fastapi==0.111.0
+uvicorn==0.29.0
+numpy==1.26.4
+scipy==1.13.0
+requests==2.31.0
